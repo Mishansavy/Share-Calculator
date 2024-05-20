@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale = 1.0, minimum-scale=1.0, maximum-scale = 1.0"
+    />
+    <title>Share Calculator - || Miyo Securities ||</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    
+
+ 
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      type="text/css"
+      media="all"
+    />
+
+    <script
+      type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    ></script>
+
+      
+          <div class="container">
+            <div class="row">
+              <!-- Main Content -->
+              <div class="col-md-12">
+                <div class="col-md-12">
+                  <div class="agm-list b-shadow margin-bottom-20">
+                    <div class="col-md-12">
+                      <h3 class="heading-title">Share Calculator</h3>
+                      <div class="border-orange"></div>
+                      <div class="col-md-5">
+                        <form
+                          class="share-calculator form-horizontal"
+                          method="post"
+                          id="share_calculator"
+                        >
+                          <input
+                            type="hidden"
+                            name="_token"
+                            value="zlCqtAcAHaEelTVGjfs3bccxvwcvrRcmCQ7SX3uq"
+                          />
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="transaction_type" class=""
+                                  >Transaction Type</label
+                                >
+                                <select
+                                  name="transaction_type"
+                                  id="transaction_type"
+                                  class="form-control bg-d"
+                                >
+                                  <option value="BUY">Buy</option>
+                                  <option value="SELL">Sell</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="share_qty" class=""
+                                  >Share Quantity</label
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="share_qty"
+                                  name="share_qty"
+                                  placeholder="Number Only"
+                                  min="0"
+                                  max="10000000"
+                                  onkeyup="enforceMinMax(this);"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div id="prchWrap" class="col-md-12">
+                              <div class="form-group">
+                                <label for="purchase_price" class="prchLvl"
+                                  >Purchase Price (Rs)</label
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="purchase_price"
+                                  name="purchase_price"
+                                  placeholder="Number Only"
+                                  min="0"
+                                  max="10000000000"
+                                  onkeyup="enforceMinMax(this);"
+                                />
+                              </div>
+                            </div>
+                            <div
+                              id="wacWrap"
+                              class="col-md-4"
+                              style="display: none"
+                            >
+                              <div class="form-check" style="margin-top: 27px">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  value=""
+                                  id="waccCheck"
+                                />
+                                <label class="form-check-label" for="waccCheck"
+                                  >Is WACC Price ?
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div
+                                id="selling_row"
+                                style="display: none"
+                                class="form-group"
+                              >
+                                <label for="selling_price" class=""
+                                  >Selling Price (Rs)
+                                </label>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="selling_price"
+                                  name="selling_price"
+                                  placeholder="Number Only"
+                                  min="0"
+                                  max="10000000000"
+                                  onkeyup="enforceMinMax(this);"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div
+                                id="investor_row"
+                                style="display: none"
+                                class="form-group"
+                              >
+                                <label for="investor" class=""
+                                  >Investor Type
+                                </label>
+                                <select
+                                  name="investor"
+                                  id="investor"
+                                  class="form-control bg-d"
+                                >
+                                  <option value="GI">Individual</option>
+                                  <option value="II">Institutional</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div
+                                id="capgain_row"
+                                style="display: none"
+                                class="form-group"
+                              >
+                                <label for="capgain" class=""
+                                  >Capital Gain Tax</label
+                                >
+                                <select
+                                  name="capgain"
+                                  id="capgain"
+                                  class="form-control bg-d"
+                                >
+                                  <option value="5">5%</option>
+                                  <option value="7.5">7.5%</option>
+                                  <option value="10">10%</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                  <button
+                                    type="button"
+                                    id="share-calculate-btn"
+                                    class="btn btn-primary"
+                                  >
+                                    Calculate
+                                  </button>
+                                  <button
+                                    type="reset"
+                                    class="btn btn-danger"
+                                    id="share-calculate-clear-btn"
+                                  >
+                                    Clear
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <!--form ends-->
+                      </div>
+                      <div class="col-md-1"></div>
+                      <div class="col-md-6">
+                        <p>
+                          <b>Details:</b>
+                        </p>
+                        <hr style="margin-top: 0px; margin-bottom: 0px" />
+                        <div class="table-responsive">
+                          <table
+                            class="table table-hover table-striped table-bordered compact"
+                          >
+                            <tbody>
+                              <tr class="selling">
+                                <td>
+                                  <b>Investor Type</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="investor_type">-</b>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>Total Amount</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="total_amount">-</b>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>* Comission</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="broker_commision">-</b>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>SEBON FEE</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="sebon_fee">-</b>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>DP Charge</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="dp_charge">-</b>
+                                </td>
+                              </tr>
+                              <tr class="purchase">
+                                <td>
+                                  <b>Total Amount Payable (Rs)</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="total_payable_amount">-</b>
+                                </td>
+                              </tr>
+                              <tr class="selling">
+                                <td>
+                                  <b>Total Amount Receivable (Rs)</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="total_receivable_amount">-</b>
+                                </td>
+                              </tr>
+                              <tr class="purchase">
+                                <td>
+                                  <b>Cost Price Per Share (Rs)</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="cost_price_per_unit">-</b>
+                                </td>
+                              </tr>
+                              <tr class="selling">
+                                <td>
+                                  <b id="capitaltaxtitle"
+                                    >Capital Gain Tax (Rs)</b
+                                  >
+                                </td>
+                                <td class="text-right">
+                                  <b id="capitaltax">-</b>
+                                </td>
+                              </tr>
+                              <tr class="selling">
+                                <td>
+                                  <b>Profit/Loss (Rs)</b>
+                                </td>
+                                <td class="text-right">
+                                  <b id="net_profit_loss">-</b>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  colspan="2"
+                                  id="note"
+                                  style="color: #f88222"
+                                ></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+              <script
+                type="text/javascript"
+                src="https://content.sharesansar.com/site/js/big.js"
+              ></script>
+              <script type="text/javascript">
+                Big.prototype.toFormat = function (ts, ds, dp) {
+                  var arr = this.toFixed(dp).split(".");
+                  arr[0] = arr[0].replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    ts == null ? "," : ts + ""
+                  );
+
+                  return arr.join(ds == null ? "." : ds + "");
+                };
+
+                function enforceMinMax(el) {
+                  if (el.value != "") {
+                    if (parseInt(el.value) < parseInt(el.min)) {
+                      el.value = el.min;
+                    }
+                    if (parseInt(el.value) > parseInt(el.max)) {
+                      el.value = el.max;
+                    }
+                  }
+                }
+
+                function broker_commission(total) {
+                  var bkcomm = new Big(0);
+                  if (total.cmp(new Big(50000)) <= 0)
+                    bkcomm = new Big(0.36 / 100).times(total);
+                  else if (
+                    total.cmp(new Big(50000)) > 0 &&
+                    total.cmp(new Big(500000)) <= 0
+                  )
+                    bkcomm = new Big(0.33 / 100).times(total);
+                  else if (
+                    total.cmp(new Big(500000)) > 0 &&
+                    total.cmp(new Big(2000000)) <= 0
+                  )
+                    bkcomm = new Big(0.31 / 100).times(total);
+                  else if (
+                    total.cmp(new Big(2000000)) > 0 &&
+                    total.cmp(new Big(10000000)) <= 0
+                  )
+                    bkcomm = new Big(0.27 / 100).times(total);
+                  else bkcomm = new Big(0.24 / 100).times(total);
+                  if (bkcomm.cmp(new Big(10)) <= 0) bkcomm = new Big(10);
+                  return bkcomm;
+                }
+
+                function sebon_fee(total) {
+                  return new Big(0.015 / 100).times(total);
+                }
+
+                function dp_charge() {
+                  return new Big(25);
+                }
+
+                $("#waccCheck").on("change", function () {
+                  if ($(this).prop("checked")) {
+                    $(".prchLvl").html("Weighted Average Price (Rs)");
+                  } else {
+                    $(".prchLvl").html("Purchase Price (Rs)");
+                  }
+                });
+
+                $("#transaction_type").on("change", function () {
+                  $("#selling_row").hide();
+                  $("#investor_row").hide();
+                  $("#capgain_row").hide();
+                  $("#prchWrap").removeClass();
+                  $("#prchWrap").addClass("col-md-12");
+                  $("#wacWrap").hide();
+                  $(".prchLvl").html("Purchase Price (Rs)");
+                  $("#waccCheck").prop("checked", false);
+                  if ("SELL" == $("#transaction_type").val()) {
+                    $("#selling_row").show();
+                    $("#investor_row").show();
+                    $("#capgain_row").show();
+                    $("#prchWrap").removeClass();
+                    $("#prchWrap").addClass("col-md-8");
+                    $("#wacWrap").show();
+                  }
+                  $("#investor").change();
+                });
+
+                $("#investor").on("change", function () {
+                  "GI" == $("#investor").val()
+                    ? $("#capgain").html(
+                        '<option value="5.00">5%</option><option value="7.50">7.5%</option>'
+                      )
+                    : $("#capgain").html('<option value="10.00">10%</option>');
+                });
+
+                function calculate() {
+                  $(".purchase").hide();
+                  $(".selling").hide();
+                  var txnType = $("#transaction_type").val();
+                  var invsType = $("#investor").val();
+                  var qty = new Big(0);
+                  var prchRate = new Big(0);
+                  var sellRate = new Big(0);
+                  var capGain = new Big(0);
+                  var isWacc = $("#waccCheck").prop("checked");
+                  if ($("#share_qty").val())
+                    qty = new Big($("#share_qty").val());
+                  if ($("#purchase_price").val())
+                    prchRate = new Big($("#purchase_price").val());
+                  if ($("#selling_price").val())
+                    sellRate = new Big($("#selling_price").val());
+                  if ($("#capgain").val())
+                    capGain = new Big($("#capgain").val());
+                  if ("BUY" == txnType) {
+                    $(".purchase").show();
+                    var dTxnAmt = "-";
+                    var dBkrCmm = "-";
+                    var dSebFee = "-";
+                    var dDpChrg = "-";
+                    var dNetTxnAmount = "-";
+                    var dNetCst = "-";
+                    var dNote =
+                      "<b>* Commission Amount</b> includes NEPSE Commission <b> Rs - </b> & SEBON Regularity Fee <b> Rs - </b>";
+                    if (qty > 0 && prchRate > 0) {
+                      var txnAmount = qty.times(prchRate);
+                      var bkrCmm = broker_commission(txnAmount);
+                      var sebFee = sebon_fee(txnAmount);
+                      var dpChrg = dp_charge();
+                      var netTxnAmount = txnAmount
+                        .plus(bkrCmm)
+                        .plus(sebFee)
+                        .plus(dpChrg);
+                      var netCst = netTxnAmount.div(qty);
+                      var nepComm = bkrCmm.times(0.2);
+                      var sebComm = bkrCmm.times(0.006);
+
+                      dTxnAmt = txnAmount.toFormat(",", ".", 2);
+                      dBkrCmm = bkrCmm.toFormat(",", ".", 2);
+                      dSebFee = sebFee.toFormat(",", ".", 2);
+                      dDpChrg = dpChrg.toFormat(",", ".", 2);
+                      dNetTxnAmount = netTxnAmount.toFormat(",", ".", 2);
+                      dNetCst = netCst.toFormat(",", ".", 2);
+                      dNote =
+                        "<b>* Commission Amount</b> includes NEPSE Commission <b> Rs " +
+                        nepComm.toFormat(",", ".", 2) +
+                        " </b> & SEBON Regularity Fee <b> Rs " +
+                        sebComm.toFormat(",", ".", 2) +
+                        "</b>";
+                    }
+                    $("#total_amount").html(dTxnAmt);
+                    $("#broker_commision").html(dBkrCmm);
+                    $("#sebon_fee").html(dSebFee);
+                    $("#dp_charge").html(dDpChrg);
+                    $("#total_payable_amount").html(dNetTxnAmount);
+                    $("#cost_price_per_unit").html(dNetCst);
+                    $("#note").html(dNote);
+                  }
+                  if ("SELL" == txnType) {
+                    $(".selling").show();
+                    var dInvsName = "-";
+                    var dTxnAmt = "-";
+                    var dBkrCmm = "-";
+                    var dSebFee = "-";
+                    var dDpChrg = "-";
+                    var dCapGainTitle = "Capital Gain Tax (Rs)";
+                    var dCapGain = "-";
+                    var dReceivableAmt = "-";
+                    var dProfitLoss = "-";
+                    var dNote =
+                      "<b>* Commission Amount</b> includes NEPSE Commission <b> Rs - </b> & SEBON Regularity Fee <b> Rs - </b>";
+                    if (
+                      qty > 0 &&
+                      prchRate > 0 &&
+                      sellRate > 0 &&
+                      capGain > 0 &&
+                      invsType
+                    ) {
+                      //For Purchase
+                      var buyTxnAmount = qty.times(prchRate);
+                      var buyBkrCmm = !isWacc
+                        ? broker_commission(buyTxnAmount)
+                        : new Big(0);
+                      var buySebFee = !isWacc
+                        ? sebon_fee(buyTxnAmount)
+                        : new Big(0);
+                      var buyDpChrg = !isWacc ? dp_charge() : new Big(0);
+                      var buyNetTxnAmount = buyTxnAmount
+                        .plus(buyBkrCmm)
+                        .plus(buySebFee)
+                        .plus(buyDpChrg);
+                      var buyNetCst = buyNetTxnAmount.div(qty);
+
+                      //For Sell
+                      var invsName =
+                        "GI" == invsType
+                          ? "General Investor"
+                          : "Institutional Investor";
+                      var sellTxnAmount = qty.times(sellRate);
+                      var sellBkrCmm = broker_commission(sellTxnAmount);
+                      var sellSebFee = sebon_fee(sellTxnAmount);
+                      var sellDpChrg = dp_charge();
+                      var sellNetTxnAmount = sellTxnAmount
+                        .minus(sellBkrCmm)
+                        .minus(sellSebFee)
+                        .minus(sellDpChrg);
+                      var sellNetCst = sellNetTxnAmount.div(qty);
+                      var taxAmount = sellNetTxnAmount.minus(buyNetTxnAmount);
+                      var capGainAmount = new Big(0);
+                      if (taxAmount.cmp(new Big(0)) == 1)
+                        capGainAmount = capGain
+                          .div(new Big(100))
+                          .times(taxAmount);
+                      var profitLoss = taxAmount.minus(capGainAmount);
+                      var receivableAmt = sellNetTxnAmount.minus(capGainAmount);
+                      var nepComm = sellBkrCmm.times(0.2);
+                      var sebComm = sellBkrCmm.times(0.006);
+
+                      dInvsName = invsName;
+                      dTxnAmt = sellTxnAmount.toFormat(",", ".", 2);
+                      dBkrCmm = sellBkrCmm.toFormat(",", ".", 2);
+                      dSebFee = sellSebFee.toFormat(",", ".", 2);
+                      dDpChrg = sellDpChrg.toFormat(",", ".", 2);
+                      dCapGainTitle =
+                        "Capital Gain Tax (" + capGain + "%) (Rs)";
+                      dCapGain = capGainAmount.toFormat(",", ".", 2);
+                      dReceivableAmt = receivableAmt.toFormat(",", ".", 2);
+                      dProfitLoss = profitLoss.toFormat(",", ".", 2);
+                      dNote =
+                        "<b>* Commission Amount</b> includes NEPSE Commission <b> Rs " +
+                        nepComm.toFormat(",", ".", 2) +
+                        " </b> & SEBON Regularity Fee <b> Rs " +
+                        sebComm.toFormat(",", ".", 2) +
+                        "</b>";
+                    }
+                    $("#investor_type").html(dInvsName);
+                    $("#total_amount").html(dTxnAmt);
+                    $("#broker_commision").html(dBkrCmm);
+                    $("#sebon_fee").html(dSebFee);
+                    $("#dp_charge").html(dDpChrg);
+                    $("#capitaltaxtitle").html(dCapGainTitle);
+                    $("#capitaltax").html(dCapGain);
+                    $("#total_receivable_amount").html(dReceivableAmt);
+                    $("#net_profit_loss").html(dProfitLoss);
+                    $("#note").html(dNote);
+                  }
+                }
+
+                $("#share-calculate-btn").on("click", function () {
+                  calculate();
+                });
+
+                $("#share-calculate-clear-btn").on("click", function (e) {
+                  e.preventDefault();
+                  $(".share-calculator").trigger("reset");
+                  $("#transaction_type").trigger("change");
+                  calculate();
+                });
+
+                $("#transaction_type").on("change", function () {
+                  calculate();
+                });
+
+                $("#share_qty").on("keyup", function () {
+                  calculate();
+                });
+
+                $("#purchase_price").on("keyup", function () {
+                  calculate();
+                });
+
+                $("#selling_price").on("keyup", function () {
+                  calculate();
+                });
+
+                $("#investor").on("change", function () {
+                  calculate();
+                });
+
+                $("#capgain").on("change", function () {
+                  calculate();
+                });
+
+                $("#waccCheck").on("change", function () {
+                  calculate();
+                });
+
+                calculate();
+              </script>
+            </div>
+          </div>
+  </body>
+</html>
